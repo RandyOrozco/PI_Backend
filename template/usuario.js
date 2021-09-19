@@ -1,0 +1,42 @@
+const usuario = [
+  {
+    registroAcademico: "200313243",
+    nombre: "Randy",
+    apellido: "Orozco",
+    clave: "123456",
+    email: "randy@randy.com",
+    fecha: "",
+  },
+  {
+    registroAcademico: "200313243",
+    nombre: "Mauricio",
+    apellido: "Reyes",
+    clave: "123456",
+    email: "mauricio@mauricio.com",
+    fecha: "",
+  },
+  {
+    registroAcademico: "201084792",
+    nombre: "Timoteo",
+    apellido: "Alcántara",
+    clave: "123456",
+    email: "timoteo@timoteo.com",
+    fecha: "",
+  },
+  {
+    registroAcademico: "201589482",
+    nombre: "Casimiro",
+    apellido: "Masias",
+    clave: "123456",
+    email: "casimiro@casimiro.com",
+    fecha: "",
+  },
+  {
+    registroAcademico: "200313243",
+    nombre: "Anacleto",
+    apellido: "Rosales",
+    clave: "123456",
+    email: "anaclero@anacleto.com",
+    fecha: "",
+  },
+];
