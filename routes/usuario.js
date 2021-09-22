@@ -5,6 +5,7 @@ const { Router } = require("express");
 const {
   usuarioGetTodo,
   usuarioGetUno,
+  usuarioLogin,
   usuarioPost,
   usuarioPut,
   usuarioPatch,
@@ -18,6 +19,7 @@ const router = Router();
 // porque la contención que se usó en la llamada lo abarcará
 router.get("/uno", usuarioGetUno);
 router.get("/todo", usuarioGetTodo);
+router.get("/login", usuarioLogin);
 
 router.post("/", usuarioPost);
 

@@ -87,6 +87,30 @@ const usuarioGetTodo = (req = request, res = response) => {
   });
 };
 
+const usuarioLogin = (req = request, res = response) => {
+  poolMySQL.getConnection(function (err, conn) {
+    if (err) {
+      res.send("Ha ocurrido un error: " + err);
+    } else {
+      const { registroacademico, clave } = req.body;
+      //console.log(registroacademico);
+      //console.log(clave);
+      conn.query(
+        `select * from usuario where registroacademico='${registroacademico}' and clave='${clave}'`,
+        function (qerr, records, fields) {
+          if (qerr) {
+            res.send("Ha ocurrido un error en la consulta " + qerr);
+          } else {
+            //console.log(records);
+            res.send(records);
+          }
+          conn.release();
+        }
+      );
+    }
+  });
+};
+
 const usuarioPost = (req, res) => {
   poolMySQL.getConnection(function (err, conn) {
     if (err) {
@@ -172,6 +196,7 @@ const usuarioNoParamURL = (req, res) => {
 module.exports = {
   usuarioGetUno,
   usuarioGetTodo,
+  usuarioLogin,
   usuarioPost,
   usuarioPut,
   usuarioPatch,
