@@ -63,7 +63,7 @@ const comentarioGetUno = (req = request, res = response) => {
         where co.publicacion = ${publicacion}`,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -93,7 +93,7 @@ const comentarioGetTodo = (req = request, res = response) => {
         where co.usuario = ${usuario}`,
       function (qerr, records, fields) {
         if (qerr) {
-          res.send("Ha ocurrido un error en la consulta " + qerr);
+          res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
         } else {
           res.send(records);
         }
@@ -113,7 +113,7 @@ const comentarioPost = (req, res) => {
         `INSERT INTO comentario (publicacion, usuario, fecha, texto) VALUES ('${publicacion}', '${usuario}', NOW(), '${texto}') `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -140,7 +140,7 @@ const comentarioPut = (req, res) => {
         WHERE comentario = ${comentario} `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }

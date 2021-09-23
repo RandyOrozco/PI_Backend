@@ -64,7 +64,7 @@ const publicacionGetUno = (req = request, res = response) => {
         where pu.publicacion = ${publicacion}`,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -89,7 +89,7 @@ const publicacionGetTodo = (req = request, res = response) => {
         order by fecha desc `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }

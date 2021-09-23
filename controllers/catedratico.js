@@ -59,7 +59,7 @@ const catedraticoGetUno = (req = request, res = response) => {
         `select * from catedratico where catedratico=${catedratico}`,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -77,7 +77,7 @@ const catedraticoGetTodo = (req = request, res = response) => {
     } else {
       conn.query(`select * from catedratico`, function (qerr, records, fields) {
         if (qerr) {
-          res.send("Ha ocurrido un error en la consulta " + qerr);
+          res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
         } else {
           res.send(records);
         }
@@ -100,7 +100,7 @@ const catedraticoPost = (req, res) => {
         `INSERT INTO catedratico (nombre) VALUES ('${nombre}') `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -135,7 +135,7 @@ const catedraticoPut = (req, res) => {
         WHERE catedratico = ${catedratico} `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }

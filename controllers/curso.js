@@ -59,7 +59,7 @@ const cursoGetUno = (req = request, res = response) => {
         `select cu.*, ca.nombre nombrecatedratico from curso cu left join catedratico ca on cu.catedratico = ca.catedratico where cu.curso=${curso}`,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -77,7 +77,7 @@ const cursoGetTodo = (req = request, res = response) => {
     } else {
       conn.query(`select  cu.*, ca.nombre nombrecatedratico from curso cu left join catedratico ca on cu.catedratico = ca.catedratico `, function (qerr, records, fields) {
         if (qerr) {
-          res.send("Ha ocurrido un error en la consulta " + qerr);
+          res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
         } else {
           res.send(records);
         }
@@ -100,7 +100,7 @@ const cursoPost = (req, res) => {
         `INSERT INTO curso (catedratico, credito, nombre) VALUES ('${catedratico}','${credito}','${nombre}') `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -137,7 +137,7 @@ const cursoPut = (req, res) => {
         WHERE curso = ${curso} `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }

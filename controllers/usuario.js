@@ -59,7 +59,7 @@ const usuarioGetUno = (req = request, res = response) => {
         `select * from usuario where usuario=${usuario}`,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -77,7 +77,7 @@ const usuarioGetTodo = (req = request, res = response) => {
     } else {
       conn.query(`select * from usuario`, function (qerr, records, fields) {
         if (qerr) {
-          res.send("Ha ocurrido un error en la consulta " + qerr);
+          res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
         } else {
           res.send(records);
         }
@@ -166,7 +166,7 @@ const usuarioPut = (req, res) => {
         WHERE usuario = ${usuario} `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }

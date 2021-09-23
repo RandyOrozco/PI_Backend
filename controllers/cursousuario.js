@@ -62,7 +62,7 @@ const cursousuarioGetUno = (req = request, res = response) => {
         where cuus.usuario = ${usuario}`,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -83,7 +83,7 @@ const cursousuarioGetTodo = (req = request, res = response) => {
         from cursousuario cuus left join curso cu on cuus.curso = cu.curso left join usuario us on cuus.usuario = us.usuario`,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -104,7 +104,7 @@ const cursousuarioPost = (req, res) => {
         `INSERT INTO cursousuario (curso, usuario) VALUES ('${curso}','${usuario}') `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -132,7 +132,7 @@ const cursousuarioPut = (req, res) => {
         WHERE cursousuario = ${cursousuario} `,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
