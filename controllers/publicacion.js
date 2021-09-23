@@ -106,11 +106,13 @@ const publicacionPost = (req, res) => {
       res.send("Ha ocurrido un error: " + err);
     } else {
       const { usuario, curso, catedratico, titulo, texto } = req.body;
+      const q = `INSERT INTO publicacion (usuario, curso, catedratico, fecha, titulo, texto ) VALUES ('${usuario}', '${curso}', '${catedratico}', NOW(), '${titulo}', '${texto}') `;
+      console.log(q);
       conn.query(
-        `INSERT INTO publicacion (usuario, curso, catedratico, fecha, titulo, texto ) VALUES ('${usuario}', '${curso}', '${catedratico}', '${titulo}', NOW(), '${texto}') `,
+        q,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -131,16 +133,18 @@ const publicacionPut = (req, res) => {
     } else {
       const publicacion = req.params.publicacion;
       const { curso, catedratico, titulo, texto } = req.body;
+      const q = `UPDATE publicacion SET 
+      curso = '${curso}',
+      catedratico = '${catedratico}',
+      titulo = '${titulo}',
+      texto = '${texto}'
+      WHERE publicacion = ${publicacion} `;
+      console.log(q);
       conn.query(
-        `UPDATE publicacion SET 
-        curso = '${curso}',
-        catedratico = '${catedratico}',
-        titulo = '${titulo}',
-        texto = '${texto}'
-        WHERE publicacion = ${publicacion} `,
+        q,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }

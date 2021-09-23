@@ -95,11 +95,13 @@ const usuarioLogin = (req = request, res = response) => {
       const { registroacademico, clave } = req.body;
       //console.log(registroacademico);
       //console.log(clave);
+      const q = `select * from usuario where registroacademico='${registroacademico}' and clave='${clave}'`;
+      console.log(q);
       conn.query(
-        `select * from usuario where registroacademico='${registroacademico}' and clave='${clave}'`,
+        q,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             //console.log(records);
             res.send(records);
@@ -120,11 +122,13 @@ const usuarioPost = (req, res) => {
       /*console.log(
         `INSERT INTO usuario ('registroacademico', 'nombre', 'apellido', 'clave', 'email', 'fecha') VALUES ('${registroacademico}','${nombre}','${apellido}','${clave}','${email}',NOW()) `
       );*/
+      const q = `INSERT INTO usuario (registroacademico, nombre, apellido, clave, email, fecha) VALUES ('${registroacademico}','${nombre}','${apellido}','${clave}','${email}',NOW()) `;
+      console.log(q);
       conn.query(
-        `INSERT INTO usuario (registroacademico, nombre, apellido, clave, email, fecha) VALUES ('${registroacademico}','${nombre}','${apellido}','${clave}','${email}',NOW()) `,
+        q,
         function (qerr, records, fields) {
           if (qerr) {
-            res.send("Ha ocurrido un error en la consulta " + qerr);
+            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
           } else {
             res.send(records);
           }
@@ -141,7 +145,7 @@ const usuarioPost = (req, res) => {
 const usuarioPut = (req, res) => {
   poolMySQL.getConnection(function (err, conn) {
     if (err) {
-      res.send("Ha ocurrido un error: " + err);
+      res.status(500).send("Ha ocurrido un error: " + err);
     } else {
       const usuario = req.params.usuario;
       const { nombre, apellido, clave, email } = req.body;
