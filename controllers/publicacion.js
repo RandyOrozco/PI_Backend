@@ -55,13 +55,15 @@ const publicacionGetUno = (req = request, res = response) => {
       res.send("Ha ocurrido un error: " + err);
     } else {
       const { publicacion } = req.query;
+      const q = `select pu.*, us.registroacademico, us.nombre nombreusuario, us.apellido, cu.nombre nombrecurso, ca.nombre nombrecatedratico 
+      from publicacion pu left 
+      join usuario us on pu.usuario = us.usuario 
+      left join curso cu on pu.curso = cu.curso 
+      left join catedratico ca on pu.catedratico = ca.catedratico 
+      where pu.publicacion = ${publicacion}`;
+      console.log(q);
       conn.query(
-        `select pu.*, us.registroacademico, us.nombre nombreusuario, us.apellido, cu.nombre nombrecurso, ca.nombre nombrecatedratico 
-        from publicacion pu left 
-        join usuario us on pu.usuario = us.usuario 
-        left join curso cu on pu.curso = cu.curso 
-        left join catedratico ca on pu.catedratico = ca.catedratico 
-        where pu.publicacion = ${publicacion}`,
+        q,
         function (qerr, records, fields) {
           if (qerr) {
             res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
@@ -80,13 +82,15 @@ const publicacionGetTodo = (req = request, res = response) => {
     if (err) {
       res.send("Ha ocurrido un error: " + err);
     } else {
+      const q = `select pu.publicacion, pu.fecha, pu.titulo, us.registroacademico, us.nombre nombreusuario, us.apellido, cu.nombre nombrecurso, ca.nombre nombrecatedratico 
+      from publicacion pu 
+      left join usuario us on pu.usuario = us.usuario 
+      left join curso cu on pu.curso = cu.curso 
+      left join catedratico ca on pu.catedratico = ca.catedratico 
+      order by fecha desc `;
+      console.log(q);
       conn.query(
-        `select pu.publicacion, pu.fecha, pu.titulo, us.registroacademico, us.nombre nombreusuario, us.apellido, cu.nombre nombrecurso, ca.nombre nombrecatedratico 
-        from publicacion pu 
-        left join usuario us on pu.usuario = us.usuario 
-        left join curso cu on pu.curso = cu.curso 
-        left join catedratico ca on pu.catedratico = ca.catedratico 
-        order by fecha desc `,
+        q,
         function (qerr, records, fields) {
           if (qerr) {
             res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
