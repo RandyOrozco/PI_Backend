@@ -95,20 +95,33 @@ const usuarioLogin = (req = request, res = response) => {
       const { registroacademico, clave } = req.body;
       //console.log(registroacademico);
       //console.log(clave);
-      const q = `select * from usuario where registroacademico='${registroacademico}' and clave='${clave}'`;
+      const q = `select registroacademico from usuario where registroacademico='${registroacademico}' and clave='${clave}'`;
       console.log(q);
-      conn.query(
-        q,
-        function (qerr, records, fields) {
-          if (qerr) {
-            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
-          } else {
-            //console.log(records);
-            res.send(records);
-          }
-          conn.release();
-        }
-      );
+      conn.query(q, function (qerr, records, fields) {
+        if (qerr) {
+          res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
+        } else if (records) {
+          records.forEach((e) => {
+            console.log("ra");
+            console.log(e.registroacademico);
+            if (e.registroacademico != null) {
+              console.log("login exitoso");
+              res.status(200).send(e);
+              res.end();
+            } 
+            /*else {
+              console.log("login fallidoa");
+              res.send(null);
+            }*/
+          });
+        } /*else {
+          console.log("login fallidob");
+          res.send(null);
+        }*/
+        conn.release();
+        /*console.log("login fallidoc");
+        res.send(null);*/
+      });
     }
   });
 };
@@ -124,17 +137,14 @@ const usuarioPost = (req, res) => {
       );*/
       const q = `INSERT INTO usuario (registroacademico, nombre, apellido, clave, email, fecha) VALUES ('${registroacademico}','${nombre}','${apellido}','${clave}','${email}',NOW()) `;
       console.log(q);
-      conn.query(
-        q,
-        function (qerr, records, fields) {
-          if (qerr) {
-            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
-          } else {
-            res.send(records);
-          }
-          conn.release();
+      conn.query(q, function (qerr, records, fields) {
+        if (qerr) {
+          res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
+        } else {
+          res.send(records);
         }
-      );
+        conn.release();
+      });
     }
   });
 };
