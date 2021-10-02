@@ -159,7 +159,6 @@ const catedraticoDelete = (req, res) => {
 };
 
 /* Respuesta por defecto a una URL incompleta */
-// TODO: buscar cómo se establece una respuesta tipo error 400
 const catedraticoNoParamURL = (req, res) => {
   res.status(400).json({
     msg: "Debe establecer un parámetro",

@@ -79,18 +79,27 @@ const comentarioGetTodo = (req = request, res = response) => {
     if (err) {
       res.send("Ha ocurrido un error: " + err);
     } else {
-      const { usuario } = req.body;
+      // console.log(req.body);
+      const { usuario = '0' } = req.query;
+      const { publicacion = '0' } = req.query;
       /*console.log(`select pu.publicacion, pu.titulo, pu.fecha fechapublicacion, us.registroacademico, us.nombre, us.apellido, co.fecha, co.texto 
       from comentario co 
       left join publicacion pu on co.publicacion = pu.publicacion 
       left join usuario us on co.usuario = us.usuario 
       where co.usuario = ${usuario}`);*/
+      let condicion = ``;
+      if(usuario != '0') condicion = `co.usuario = '${usuario}'`;
+      if(publicacion != '0') condicion = `co.publicacion = '${publicacion}'`;
+
+      console.log(`usuario: ${usuario} publicacion: ${publicacion}`);
+      const q = `select pu.publicacion, pu.titulo, pu.fecha fechapublicacion, us.registroacademico, us.nombre, us.apellido, co.fecha, co.texto 
+      from comentario co 
+      left join publicacion pu on co.publicacion = pu.publicacion 
+      left join usuario us on co.usuario = us.usuario 
+      where ${condicion}`;
+      console.log(q);
       conn.query(
-        `select pu.publicacion, pu.titulo, pu.fecha fechapublicacion, us.registroacademico, us.nombre, us.apellido, co.fecha, co.texto 
-        from comentario co 
-        left join publicacion pu on co.publicacion = pu.publicacion 
-        left join usuario us on co.usuario = us.usuario 
-        where co.usuario = ${usuario}`,
+        q,
       function (qerr, records, fields) {
         if (qerr) {
           res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
@@ -179,7 +188,6 @@ const comentarioDelete = (req, res) => {
 };
 
 /* Respuesta por defecto a una URL incompleta */
-// TODO: buscar cómo se establece una respuesta tipo error 400
 const comentarioNoParamURL = (req, res) => {
   res.status(400).json({
     msg: "Debe establecer un parámetro",

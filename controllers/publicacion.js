@@ -82,11 +82,16 @@ const publicacionGetTodo = (req = request, res = response) => {
     if (err) {
       res.send("Ha ocurrido un error: " + err);
     } else {
+      console.log(req.query);
+      const { usuario = '0' } = req.query;
+      let condicion = ``;
+      if(usuario != '0') condicion = `where pu.usuario = '${usuario}'`;
       const q = `select pu.publicacion, pu.fecha, pu.titulo, pu.usuario, us.registroacademico, us.nombre nombreusuario, us.apellido, cu.nombre nombrecurso, ca.nombre nombrecatedratico 
       from publicacion pu 
       left join usuario us on pu.usuario = us.usuario 
       left join curso cu on pu.curso = cu.curso 
       left join catedratico ca on pu.catedratico = ca.catedratico 
+      ${condicion}
       order by fecha desc `;
       console.log(q);
       conn.query(
@@ -172,7 +177,6 @@ const publicacionDelete = (req, res) => {
 };
 
 /* Respuesta por defecto a una URL incompleta */
-// TODO: buscar cómo se establece una respuesta tipo error 400
 const publicacionNoParamURL = (req, res) => {
   res.status(400).json({
     msg: "Debe establecer un parámetro",
