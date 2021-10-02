@@ -55,8 +55,10 @@ const usuarioGetUno = (req = request, res = response) => {
       res.send("Ha ocurrido un error: " + err);
     } else {
       const { usuario } = req.query;
+      const q = `select * from usuario where usuario='${usuario}'`;
+      console.log(q);
       conn.query(
-        `select * from usuario where usuario=${usuario}`,
+        q,
         function (qerr, records, fields) {
           if (qerr) {
             res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
@@ -95,7 +97,7 @@ const usuarioLogin = (req = request, res = response) => {
       const { registroacademico, clave } = req.body;
       //console.log(registroacademico);
       //console.log(clave);
-      const q = `select registroacademico from usuario where registroacademico='${registroacademico}' and clave='${clave}'`;
+      const q = `select usuario from usuario where registroacademico='${registroacademico}' and clave='${clave}'`;
       console.log(q);
       conn.query(q, function (qerr, records, fields) {
         if (qerr) {
@@ -103,8 +105,8 @@ const usuarioLogin = (req = request, res = response) => {
         } else if (records) {
           records.forEach((e) => {
             console.log("ra");
-            console.log(e.registroacademico);
-            if (e.registroacademico != null) {
+            console.log(e.usuario);
+            if (e.usuario != null) {
               console.log("login exitoso");
               res.status(200).send(e);
               res.end();

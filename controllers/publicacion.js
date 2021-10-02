@@ -82,7 +82,7 @@ const publicacionGetTodo = (req = request, res = response) => {
     if (err) {
       res.send("Ha ocurrido un error: " + err);
     } else {
-      const q = `select pu.publicacion, pu.fecha, pu.titulo, us.registroacademico, us.nombre nombreusuario, us.apellido, cu.nombre nombrecurso, ca.nombre nombrecatedratico 
+      const q = `select pu.publicacion, pu.fecha, pu.titulo, pu.usuario, us.registroacademico, us.nombre nombreusuario, us.apellido, cu.nombre nombrecurso, ca.nombre nombrecatedratico 
       from publicacion pu 
       left join usuario us on pu.usuario = us.usuario 
       left join curso cu on pu.curso = cu.curso 
