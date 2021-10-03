@@ -55,7 +55,7 @@ const publicacionGetUno = (req = request, res = response) => {
       res.send("Ha ocurrido un error: " + err);
     } else {
       const { publicacion } = req.query;
-      const q = `select pu.*, us.registroacademico, us.nombre nombreusuario, us.apellido, cu.nombre nombrecurso, ca.nombre nombrecatedratico 
+      const q = `select pu.*, us.registroacademico, us.nombre nombreusuario, us.apellido, coalesce(cu.nombre, ca.nombre) acercade
       from publicacion pu left 
       join usuario us on pu.usuario = us.usuario 
       left join curso cu on pu.curso = cu.curso 

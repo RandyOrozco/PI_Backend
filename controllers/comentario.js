@@ -96,7 +96,8 @@ const comentarioGetTodo = (req = request, res = response) => {
       from comentario co 
       left join publicacion pu on co.publicacion = pu.publicacion 
       left join usuario us on co.usuario = us.usuario 
-      where ${condicion}`;
+      where ${condicion}
+      order by co.fecha desc`;
       console.log(q);
       conn.query(
         q,
