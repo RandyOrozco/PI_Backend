@@ -80,16 +80,16 @@ const comentarioGetTodo = (req = request, res = response) => {
       res.send("Ha ocurrido un error: " + err);
     } else {
       // console.log(req.body);
-      const { usuario = '0' } = req.query;
-      const { publicacion = '0' } = req.query;
+      const { usuario = "0" } = req.query;
+      const { publicacion = "0" } = req.query;
       /*console.log(`select pu.publicacion, pu.titulo, pu.fecha fechapublicacion, us.registroacademico, us.nombre, us.apellido, co.fecha, co.texto 
       from comentario co 
       left join publicacion pu on co.publicacion = pu.publicacion 
       left join usuario us on co.usuario = us.usuario 
       where co.usuario = ${usuario}`);*/
       let condicion = ``;
-      if(usuario != '0') condicion = `co.usuario = '${usuario}'`;
-      if(publicacion != '0') condicion = `co.publicacion = '${publicacion}'`;
+      if (usuario != "0") condicion = `co.usuario = '${usuario}'`;
+      if (publicacion != "0") condicion = `co.publicacion = '${publicacion}'`;
 
       console.log(`usuario: ${usuario} publicacion: ${publicacion}`);
       const q = `select pu.publicacion, pu.titulo, pu.fecha fechapublicacion, us.registroacademico, us.nombre, us.apellido, co.fecha, co.texto 
@@ -99,9 +99,7 @@ const comentarioGetTodo = (req = request, res = response) => {
       where ${condicion}
       order by co.fecha desc`;
       console.log(q);
-      conn.query(
-        q,
-      function (qerr, records, fields) {
+      conn.query(q, function (qerr, records, fields) {
         if (qerr) {
           res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
         } else {
@@ -119,17 +117,16 @@ const comentarioPost = (req, res) => {
       res.send("Ha ocurrido un error: " + err);
     } else {
       const { publicacion, usuario, texto } = req.body;
-      conn.query(
-        `INSERT INTO comentario (publicacion, usuario, fecha, texto) VALUES ('${publicacion}', '${usuario}', NOW(), '${texto}') `,
-        function (qerr, records, fields) {
-          if (qerr) {
-            res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
-          } else {
-            res.send(records);
-          }
-          conn.release();
+      const q = `INSERT INTO comentario (publicacion, usuario, fecha, texto) VALUES ('${publicacion}', '${usuario}', NOW(), '${texto}') `;
+      console.log(q);
+      conn.query(q, function (qerr, records, fields) {
+        if (qerr) {
+          res.status(500).send("Ha ocurrido un error en la consulta " + qerr);
+        } else {
+          res.send(records);
         }
-      );
+        conn.release();
+      });
     }
   });
 };
